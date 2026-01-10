@@ -2,7 +2,12 @@ import type { NextAuthConfig } from "next-auth"
 import Google from "next-auth/providers/google"
 
 export const authConfig = {
-    providers: [Google],
+    providers: [
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID || "596084116048-emhhqvlfj39o0uqr0poirhplt264us4h.apps.googleusercontent.com",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+        })
+    ],
     pages: {
         signIn: "/auth/signin",
         error: "/auth/error",
