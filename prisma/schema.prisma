@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  STUDENT
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum OperationType {
+  ADDITION
+  SUBTRACTION
+  MULTIPLICATION
+  DIVISION
+  MIXED
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(STUDENT)
+  isBlocked     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  
+  // Relations
+  studentProfile StudentProfile?
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Application Models
+
+model StudentProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  xp            Int      @default(0)
+  level         Int      @default(1)
+  totalTests    Int      @default(0)
+  avgAccuracy   Float    @default(0)
+  
+  paymentStatus String   @default("PENDING") // ACTIVE, PENDING, OVERDUE
+  paymentCycle  String   @default("MONTHLY")
+  nextPayment   DateTime?
+
+  testSessions  TestSession[]
+}
+
+model TestSession {
+  id             String        @id @default(cuid())
+  studentId      String
+  student        StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  type           OperationType
+  difficulty     Difficulty
+  
+  totalQuestions Int
+  score          Int
+  accuracy       Float
+  timeTakenSeconds Int
+  
+  completedAt    DateTime      @default(now())
+  
+  results        QuestionResult[]
+}
+
+model QuestionResult {
+  id            String      @id @default(cuid())
+  sessionId     String
+  session       TestSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  question      String
+  userAnswer    String
+  correctAnswer String
+  isCorrect     Boolean
+  timeTakenMs   Int
+}
+
+model Question {
+  id            String        @id @default(cuid())
+  text          String
+  answer        String
+  operation     OperationType
+  difficulty    Difficulty
+  status        String        @default("active") // active, archived
+  usageCount    Int           @default(0)
+  createdAt     DateTime      @default(now())
+}

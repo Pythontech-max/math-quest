@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Math Quest - Game Setup</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3713ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#131022",
+              "accent-glow": "#5b37fa",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "1rem", 
+              "lg": "1.5rem", 
+              "xl": "2rem", 
+              "2xl": "2.5rem",
+              "full": "9999px"
+            },
+            boxShadow: {
+                "neon": "0 0 20px -5px rgba(55, 19, 236, 0.6)",
+                "neon-hover": "0 0 30px -5px rgba(55, 19, 236, 0.8)",
+                "card": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15)",
+            }
+          },
+        },
+      }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131022; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #292348; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3713ec; 
+        }
+
+        /* Subtle floating animation for background elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse glow animation for CTA */
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(55, 19, 236, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(55, 19, 236, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(55, 19, 236, 0); }
+        }
+        .animate-glow-pulse {
+            animation: glow-pulse 2s infinite;
+        }
+
+        /* Smooth selection transition */
+        .selection-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .selection-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        /* Radio button hidden logic styling */
+        input[type="radio"]:checked + div {
+            border-color: #3713ec;
+            background-color: rgba(55, 19, 236, 0.15);
+            box-shadow: 0 0 20px -5px rgba(55, 19, 236, 0.6);
+        }
+        input[type="radio"]:checked + div .icon-wrapper {
+            background-color: #3713ec;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Background Decor (Abstract Geometric shapes) -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+<!-- Floating Elements -->
+<div class="absolute top-[15%] right-[15%] text-slate-700/20 text-9xl font-bold animate-float" style="animation-delay: 0s;">+</div>
+<div class="absolute bottom-[20%] left-[10%] text-slate-700/20 text-8xl font-bold animate-float" style="animation-delay: 2s;">÷</div>
+</div>
+<!-- Main Content Wrapper -->
+<div class="relative z-10 flex flex-col h-full grow items-center w-full max-w-7xl mx-auto">
+<!-- Mobile Container Simulation -->
+<div class="w-full max-w-[600px] flex flex-col min-h-screen border-x border-white/5 bg-[#141122]/50 backdrop-blur-sm shadow-2xl">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between px-6 py-6 sticky top-0 z-50 bg-[#141122]/90 backdrop-blur-md border-b border-white/5">
+<button class="size-10 flex items-center justify-center rounded-full bg-slate-800/50 hover:bg-slate-700/50 text-white transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">rocket_launch</span>
+<h1 class="text-lg font-bold tracking-tight">Mission Control</h1>
+</div>
+<button class="size-10 rounded-full bg-slate-800/50 border border-white/10 overflow-hidden relative">
+<img alt="User avatar placeholder" class="w-full h-full object-cover" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX1YoOBnG5uB6vNa-3p7_fTvCDoiURSt1bRKjvTRVTmrsLX9S6BSwrTCztTV2QmtJbKeyCcB9kehXwxyVssje12DCBt5-VtGXnMtCyF2hF6FdLd2cxqfG5Me2wzPF7LgXIrz5R7hUWz4ch7ACf0fq534keXP7nhR2FEH-IGwsl3-PRJpAZuES0bz1UsVWDsTw89phHnBlY04I9gLVE1vZfcA6j-MGyt89bLsFBuKoMPH0oKFkdsZ18EVSYlnSM0kjZGsRWnDG100w1"/>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-[#141122]"></div>
+</button>
+</header>
+<main class="flex-1 px-6 py-8 flex flex-col gap-10">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h2 class="text-3xl font-bold text-white leading-tight">Configure Mission</h2>
+<p class="text-[#9b92c9] text-sm font-normal">Prepare your ship for the next math quadrant.</p>
+</div>
+<!-- Section 1: Operation Selection -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">calculate</span>
+<h3 class="text-white text-lg font-bold">Select Operation</h3>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Addition -->
+<label class="cursor-pointer group">
+<input checked="" class="hidden" name="operation" type="radio" value="addition"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-3 h-full hover:border-white/20">
+<div class="icon-wrapper size-12 rounded-full bg-[#292348] text-[#9b92c9] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<span class="font-bold text-white">Addition</span>
+</div>
+</label>
+<!-- Subtraction -->
+<label class="cursor-pointer group">
+<input class="hidden" name="operation" type="radio" value="subtraction"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-3 h-full hover:border-white/20">
+<div class="icon-wrapper size-12 rounded-full bg-[#292348] text-[#9b92c9] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-3xl">remove</span>
+</div>
+<span class="font-bold text-white">Subtraction</span>
+</div>
+</label>
+<!-- Multiplication -->
+<label class="cursor-pointer group">
+<input class="hidden" name="operation" type="radio" value="multiplication"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-3 h-full hover:border-white/20">
+<div class="icon-wrapper size-12 rounded-full bg-[#292348] text-[#9b92c9] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-3xl">close</span>
+</div>
+<span class="font-bold text-white">Multiplication</span>
+</div>
+</label>
+<!-- Division -->
+<label class="cursor-pointer group">
+<input class="hidden" name="operation" type="radio" value="division"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-3 h-full hover:border-white/20">
+<div class="icon-wrapper size-12 rounded-full bg-[#292348] text-[#9b92c9] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-3xl">percent</span>
+</div>
+<span class="font-bold text-white">Division</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Section 2: Difficulty Level -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">signal_cellular_alt</span>
+<h3 class="text-white text-lg font-bold">Difficulty Level</h3>
+</div>
+<div class="flex flex-col gap-3">
+<label class="cursor-pointer w-full">
+<input checked="" class="hidden" name="difficulty" type="radio" value="easy"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-xl p-4 flex items-center justify-between hover:border-white/20 group">
+<div class="flex items-center gap-4">
+<div class="icon-wrapper size-10 rounded-full bg-[#292348] text-green-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">sentiment_satisfied</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-bold">Rookie</span>
+<span class="text-[#9b92c9] text-xs">Numbers 1-10</span>
+</div>
+</div>
+<div class="size-6 rounded-full border-2 border-[#292348] flex items-center justify-center group-hover:border-primary/50">
+<div class="size-2.5 rounded-full bg-primary opacity-0 transition-opacity peer-checked:opacity-100"></div>
+</div>
+</div>
+</label>
+<label class="cursor-pointer w-full">
+<input class="hidden" name="difficulty" type="radio" value="medium"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-xl p-4 flex items-center justify-between hover:border-white/20 group">
+<div class="flex items-center gap-4">
+<div class="icon-wrapper size-10 rounded-full bg-[#292348] text-yellow-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">sentiment_neutral</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-bold">Cadet</span>
+<span class="text-[#9b92c9] text-xs">Numbers 1-50</span>
+</div>
+</div>
+<div class="size-6 rounded-full border-2 border-[#292348] flex items-center justify-center group-hover:border-primary/50"></div>
+</div>
+</label>
+<label class="cursor-pointer w-full">
+<input class="hidden" name="difficulty" type="radio" value="hard"/>
+<div class="selection-card bg-[#1e1933] border border-white/5 rounded-xl p-4 flex items-center justify-between hover:border-white/20 group">
+<div class="flex items-center gap-4">
+<div class="icon-wrapper size-10 rounded-full bg-[#292348] text-red-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">sentiment_very_dissatisfied</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-bold">Commander</span>
+<span class="text-[#9b92c9] text-xs">Numbers 1-100 + Negatives</span>
+</div>
+</div>
+<div class="size-6 rounded-full border-2 border-[#292348] flex items-center justify-center group-hover:border-primary/50"></div>
+</div>
+</label>
+</div>
+</section>
+<!-- Section 3: Question Count -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">list_alt</span>
+<h3 class="text-white text-lg font-bold">Mission Length</h3>
+</div>
+<div class="bg-[#1e1933] p-2 rounded-2xl border border-white/5 flex justify-between gap-1">
+<label class="cursor-pointer flex-1">
+<input checked="" class="hidden" name="questions" type="radio" value="5"/>
+<div class="selection-card h-12 rounded-xl flex items-center justify-center text-sm font-bold text-[#9b92c9] hover:bg-white/5 hover:text-white transition-all">
+                                5
+                            </div>
+</label>
+<label class="cursor-pointer flex-1">
+<input class="hidden" name="questions" type="radio" value="10"/>
+<div class="selection-card h-12 rounded-xl flex items-center justify-center text-sm font-bold text-[#9b92c9] hover:bg-white/5 hover:text-white transition-all">
+                                10
+                            </div>
+</label>
+<label class="cursor-pointer flex-1">
+<input class="hidden" name="questions" type="radio" value="20"/>
+<div class="selection-card h-12 rounded-xl flex items-center justify-center text-sm font-bold text-[#9b92c9] hover:bg-white/5 hover:text-white transition-all">
+                                20
+                            </div>
+</label>
+<label class="cursor-pointer flex-1">
+<input class="hidden" name="questions" type="radio" value="50"/>
+<div class="selection-card h-12 rounded-xl flex items-center justify-center text-sm font-bold text-[#9b92c9] hover:bg-white/5 hover:text-white transition-all">
+                                50
+                            </div>
+</label>
+</div>
+</section>
+<div class="h-10"></div> <!-- Spacer -->
+</main>
+<!-- Bottom CTA -->
+<div class="sticky bottom-0 p-6 bg-gradient-to-t from-[#141122] via-[#141122] to-transparent z-40">
+<button class="w-full bg-primary hover:bg-[#2a0bc4] text-white font-bold text-lg py-4 rounded-2xl shadow-neon hover:shadow-neon-hover transition-all transform active:scale-[0.98] animate-glow-pulse flex items-center justify-center gap-3 group">
+<span>Start Mission</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

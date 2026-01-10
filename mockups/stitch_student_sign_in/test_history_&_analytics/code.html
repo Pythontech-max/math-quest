@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathMaster - Test History &amp; Analytics</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3713ec",
+                        "accent": "#00f0ff", // Neon Cyan
+                        "accent-pink": "#ff00e6", // Neon Pink
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a12", // Deeper dark for neon contrast
+                        "surface-dark": "#161622",
+                        "surface-dark-lighter": "#1e1e2d"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "3rem", "full": "9999px"},
+                    boxShadow: {
+                        'neon-blue': '0 0 10px rgba(55, 19, 236, 0.5)',
+                        'neon-cyan': '0 0 10px rgba(0, 240, 255, 0.4)',
+                        'glow': '0 0 20px rgba(55, 19, 236, 0.25)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3713ec; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a0eb5; 
+        }
+        
+        .glass-panel {
+            background: rgba(22, 22, 34, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .neon-border-hover:hover {
+            border-color: #3713ec;
+            box-shadow: 0 0 15px rgba(55, 19, 236, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-gray-200 dark:border-white/10 bg-white/90 dark:bg-[#0a0a12]/90 backdrop-blur-md px-6 py-4 lg:px-10">
+<div class="flex items-center gap-4 text-gray-900 dark:text-white">
+<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-neon-blue">
+<span class="material-symbols-outlined text-white">calculate</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">MathMaster</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-center gap-8">
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors text-sm font-medium" href="#">Dashboard</a>
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors text-sm font-medium" href="#">Arcade</a>
+<a class="text-primary dark:text-accent font-bold drop-shadow-[0_0_5px_rgba(0,240,255,0.5)] text-sm" href="#">Battle History</a>
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors text-sm font-medium" href="#">Leaderboard</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="relative rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-accent-pink shadow-[0_0_8px_#ff00e6]"></span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-primary/50 bg-gray-200 dark:bg-gray-800" data-alt="Student avatar profile picture">
+<img alt="User Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjF0LkFhg-3yJDZPoSM3qqc7XP0DnYS_G2GG7SugUfqlFytUUIBD6soISKZF1Kt2wATtkeZcFpiGa5nXsi5iq_g2TatNkv5PrLjIiJTB5t8dAri2H1rSOkW3nHvG0UrYqY_kq8Z-3LyznJmyoqsnH7wC8_ywq4i6tyK__CjvVLqjt031sRfwEJ-vIbCyLD21DB2Juh1EkjvrNvuiOJUrTzCp7TJ2CaCRQerKFTtgJwQQGmmdeTNXkpAXpufSvuP9rzAK5tNzd-qLP7"/>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-4 md:p-8 lg:px-16 xl:px-32">
+<!-- Page Header -->
+<div class="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+<div>
+<h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white mb-2">
+                        Battle History
+                        <span class="ml-2 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary dark:text-accent border border-primary/20">
+                            Level 14
+                        </span>
+</h1>
+<p class="text-gray-500 dark:text-gray-400 max-w-xl">
+                        Review your past combat data, analyze your XP growth, and track your mathematical domination.
+                    </p>
+</div>
+<div class="flex gap-2 bg-white dark:bg-surface-dark p-1.5 rounded-full border border-gray-200 dark:border-white/5 shadow-sm">
+<button class="px-6 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-neon-blue transition-all hover:scale-105">7 Days</button>
+<button class="px-6 py-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 text-sm font-medium transition-colors">30 Days</button>
+<button class="px-6 py-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 text-sm font-medium transition-colors">All Time</button>
+</div>
+</div>
+<!-- Stats Overview Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Stat Card 1 -->
+<div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5 transition-all hover:-translate-y-1">
+<div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-all group-hover:bg-primary/20"></div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total XP</span>
+<span class="text-3xl font-bold text-gray-900 dark:text-white">12,450</span>
+</div>
+<div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-accent dark:bg-primary/20">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="flex items-center text-sm font-bold text-green-500">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                            +15%
+                        </span>
+<span class="text-xs text-gray-400">vs last week</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5 transition-all hover:-translate-y-1">
+<div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-accent-pink/10 blur-2xl transition-all group-hover:bg-accent-pink/20"></div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Games Played</span>
+<span class="text-3xl font-bold text-gray-900 dark:text-white">86</span>
+</div>
+<div class="flex h-12 w-12 items-center justify-center rounded-full bg-accent-pink/10 text-accent-pink">
+<span class="material-symbols-outlined">sports_esports</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="flex items-center text-sm font-bold text-green-500">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                            +4
+                        </span>
+<span class="text-xs text-gray-400">new matches</span>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5 transition-all hover:-translate-y-1">
+<div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-orange-500/10 blur-2xl transition-all group-hover:bg-orange-500/20"></div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Best Streak</span>
+<span class="text-3xl font-bold text-gray-900 dark:text-white">12 Days</span>
+</div>
+<div class="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500/10 text-orange-500">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="flex items-center text-sm font-bold text-orange-500">
+<span class="material-symbols-outlined text-sm">local_fire_department</span>
+                            Active
+                        </span>
+<span class="text-xs text-gray-400">Keep it up!</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Main Trend Chart -->
+<div class="lg:col-span-2 rounded-2xl bg-white p-6 shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">XP Gained Over Time</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Performance trend over last 10 games</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="h-3 w-3 rounded-full bg-primary shadow-neon-blue"></span>
+<span class="text-xs font-medium text-gray-500 dark:text-gray-300">XP</span>
+</div>
+</div>
+<!-- SVG Chart -->
+<div class="relative h-64 w-full">
+<svg class="h-full w-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 50">
+<!-- Gradient Def -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3713ec" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#3713ec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid lines -->
+<line class="text-gray-200 dark:text-white/5" stroke="currentColor" stroke-dasharray="2" stroke-width="0.5" x1="0" x2="100" y1="10" y2="10"></line>
+<line class="text-gray-200 dark:text-white/5" stroke="currentColor" stroke-dasharray="2" stroke-width="0.5" x1="0" x2="100" y1="25" y2="25"></line>
+<line class="text-gray-200 dark:text-white/5" stroke="currentColor" stroke-dasharray="2" stroke-width="0.5" x1="0" x2="100" y1="40" y2="40"></line>
+<!-- Area Path -->
+<path d="M0,45 L0,35 L10,32 L20,38 L30,25 L40,28 L50,15 L60,18 L70,10 L80,12 L90,5 L100,8 L100,50 L0,50 Z" fill="url(#chartGradient)"></path>
+<!-- Line Path -->
+<path class="drop-shadow-[0_0_4px_rgba(55,19,236,0.8)]" d="M0,35 L10,32 L20,38 L30,25 L40,28 L50,15 L60,18 L70,10 L80,12 L90,5 L100,8" fill="none" stroke="#3713ec" stroke-width="0.8"></path>
+<!-- Points -->
+<circle class="fill-white dark:fill-background-dark stroke-primary" cx="10" cy="32" r="1.5" stroke-width="0.5"></circle>
+<circle class="fill-white dark:fill-background-dark stroke-primary" cx="30" cy="25" r="1.5" stroke-width="0.5"></circle>
+<circle class="fill-white dark:fill-background-dark stroke-primary" cx="50" cy="15" r="1.5" stroke-width="0.5"></circle>
+<circle class="fill-white dark:fill-background-dark stroke-primary" cx="70" cy="10" r="1.5" stroke-width="0.5"></circle>
+<circle class="fill-white dark:fill-background-dark stroke-primary" cx="90" cy="5" r="1.5" stroke-width="0.5"></circle>
+</svg>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between mt-2 text-xs text-gray-400 font-medium px-1">
+<span>Game 1</span>
+<span>Game 5</span>
+<span>Game 10</span>
+</div>
+</div>
+<!-- Secondary Chart: Skills Radar/Accuracy -->
+<div class="rounded-2xl bg-white p-6 shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5 flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Accuracy by Skill</h3>
+<div class="flex-1 flex flex-col justify-center gap-6">
+<!-- Skill 1 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">Algebra</span>
+<span class="text-sm font-bold text-primary dark:text-accent">92%</span>
+</div>
+<div class="h-2 w-full rounded-full bg-gray-100 dark:bg-white/5 overflow-hidden">
+<div class="h-full rounded-full bg-primary shadow-neon-blue" style="width: 92%"></div>
+</div>
+</div>
+<!-- Skill 2 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">Geometry</span>
+<span class="text-sm font-bold text-accent-pink">78%</span>
+</div>
+<div class="h-2 w-full rounded-full bg-gray-100 dark:bg-white/5 overflow-hidden">
+<div class="h-full rounded-full bg-accent-pink shadow-[0_0_8px_#ff00e6]" style="width: 78%"></div>
+</div>
+</div>
+<!-- Skill 3 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">Arithmetic</span>
+<span class="text-sm font-bold text-green-500">98%</span>
+</div>
+<div class="h-2 w-full rounded-full bg-gray-100 dark:bg-white/5 overflow-hidden">
+<div class="h-full rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" style="width: 98%"></div>
+</div>
+</div>
+<!-- Skill 4 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">Logic</span>
+<span class="text-sm font-bold text-orange-500">65%</span>
+</div>
+<div class="h-2 w-full rounded-full bg-gray-100 dark:bg-white/5 overflow-hidden">
+<div class="h-full rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]" style="width: 65%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Matches Table -->
+<div class="rounded-2xl bg-white shadow-lg dark:bg-surface-dark border border-gray-100 dark:border-white/5 overflow-hidden">
+<div class="border-b border-gray-100 dark:border-white/5 px-6 py-4 flex items-center justify-between">
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Recent Matches</h3>
+<button class="text-primary dark:text-accent text-sm font-bold hover:underline">View All History</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full min-w-[700px] text-left border-collapse">
+<thead>
+<tr class="bg-gray-50/50 dark:bg-white/5 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+<th class="px-6 py-4 font-semibold">Date &amp; Time</th>
+<th class="px-6 py-4 font-semibold">Level / Topic</th>
+<th class="px-6 py-4 font-semibold">Score</th>
+<th class="px-6 py-4 font-semibold">Accuracy</th>
+<th class="px-6 py-4 font-semibold">Time</th>
+<th class="px-6 py-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-white/5">
+<!-- Row 1 (High Score) -->
+<tr class="group hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 dark:text-white">Today</span>
+<span class="text-xs text-gray-500">10:42 AM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20 text-primary dark:text-accent">
+<span class="material-symbols-outlined">functions</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Algebra Basics</p>
+<p class="text-xs text-primary dark:text-accent">Hard Mode</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.3)]">2,450</span>
+<span class="rounded bg-yellow-400/20 px-1.5 py-0.5 text-[10px] font-bold text-yellow-500 border border-yellow-500/30">PB</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-500 ring-1 ring-inset ring-green-500/20">98%</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                    4m 12s
+                                </td>
+<td class="px-6 py-4 text-right">
+<button class="rounded-full bg-white dark:bg-white/10 p-2 text-gray-500 hover:text-primary dark:text-white dark:hover:text-accent dark:hover:bg-white/20 hover:shadow-lg transition-all" title="Replay Level">
+<span class="material-symbols-outlined text-lg">replay</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 dark:text-white">Yesterday</span>
+<span class="text-xs text-gray-500">4:15 PM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-pink/20 text-accent-pink">
+<span class="material-symbols-outlined">change_history</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Geometry Intro</p>
+<p class="text-xs text-gray-500">Medium</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-lg font-bold text-gray-900 dark:text-white">1,890</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-medium text-yellow-500 ring-1 ring-inset ring-yellow-500/20">84%</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                    5m 30s
+                                </td>
+<td class="px-6 py-4 text-right">
+<button class="rounded-full bg-white dark:bg-white/10 p-2 text-gray-500 hover:text-primary dark:text-white dark:hover:text-accent dark:hover:bg-white/20 hover:shadow-lg transition-all" title="Replay Level">
+<span class="material-symbols-outlined text-lg">replay</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 dark:text-white">Oct 24</span>
+<span class="text-xs text-gray-500">6:30 PM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/20 text-orange-500">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Mixed Ops</p>
+<p class="text-xs text-gray-500">Easy</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-lg font-bold text-gray-900 dark:text-white">3,200</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-500 ring-1 ring-inset ring-green-500/20">100%</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                    3m 15s
+                                </td>
+<td class="px-6 py-4 text-right">
+<button class="rounded-full bg-white dark:bg-white/10 p-2 text-gray-500 hover:text-primary dark:text-white dark:hover:text-accent dark:hover:bg-white/20 hover:shadow-lg transition-all" title="Replay Level">
+<span class="material-symbols-outlined text-lg">replay</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 dark:text-white">Oct 23</span>
+<span class="text-xs text-gray-500">2:15 PM</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20 text-primary dark:text-accent">
+<span class="material-symbols-outlined">functions</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Advanced Algebra</p>
+<p class="text-xs text-primary dark:text-accent">Hard Mode</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-lg font-bold text-gray-900 dark:text-white">1,200</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-500 ring-1 ring-inset ring-red-500/20">65%</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                    6m 45s
+                                </td>
+<td class="px-6 py-4 text-right">
+<button class="rounded-full bg-white dark:bg-white/10 p-2 text-gray-500 hover:text-primary dark:text-white dark:hover:text-accent dark:hover:bg-white/20 hover:shadow-lg transition-all" title="Replay Level">
+<span class="material-symbols-outlined text-lg">replay</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-white/5 px-6 py-4 flex items-center justify-between">
+<p class="text-sm text-gray-500 dark:text-gray-400">Showing <span class="font-medium text-gray-900 dark:text-white">1-4</span> of <span class="font-medium text-gray-900 dark:text-white">86</span> results</p>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg border border-gray-300 dark:border-white/10 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 disabled:opacity-50">Previous</button>
+<button class="px-4 py-2 rounded-lg border border-gray-300 dark:border-white/10 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10">Next</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

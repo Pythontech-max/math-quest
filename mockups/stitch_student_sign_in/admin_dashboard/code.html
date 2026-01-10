@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathMaster Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3713ec",
+                        "accent": "#00f0ff", // Neon Cyan for glows
+                        "accent-secondary": "#ff00aa", // Neon Pink for alerts/highlights
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131022",
+                        "surface-dark": "#1c1833",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "glow": "0 0 20px -5px rgba(55, 19, 236, 0.5)",
+                        "glow-accent": "0 0 15px -3px rgba(0, 240, 255, 0.4)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(28, 24, 51, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .dark .glass-panel {
+            background: rgba(28, 24, 51, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3713ec; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f2bfd; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body min-h-screen flex flex-col overflow-hidden text-slate-800 dark:text-white transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 bg-surface-light dark:bg-[#141122] border-r border-slate-200 dark:border-[#292348] h-full transition-colors duration-200 z-20">
+<div class="flex flex-col h-full p-4">
+<div class="flex flex-col mb-8 px-2">
+<div class="flex items-center gap-2">
+<div class="h-8 w-8 rounded bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-glow">
+<span class="material-symbols-outlined text-white text-xl">calculate</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-xl font-bold font-display tracking-tight">MathMaster</h1>
+</div>
+<p class="text-slate-500 dark:text-[#9b92c9] text-xs font-normal mt-1 pl-10">Admin Console v2.0</p>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary dark:bg-[#292348] dark:text-white border-l-4 border-primary shadow-sm group transition-all" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-slate-100 dark:hover:bg-[#292348]/50 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">school</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-slate-100 dark:hover:bg-[#292348]/50 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">payments</span>
+<span class="text-sm font-medium">Payments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-slate-100 dark:hover:bg-[#292348]/50 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">library_books</span>
+<span class="text-sm font-medium">Content</span>
+</a>
+<div class="my-2 h-px bg-slate-200 dark:bg-[#292348]"></div>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-slate-100 dark:hover:bg-[#292348]/50 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">analytics</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-slate-100 dark:hover:bg-[#292348]/50 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="rounded-xl bg-gradient-to-br from-[#292348] to-primary/20 p-4 border border-slate-200 dark:border-[#292348]">
+<div class="flex items-center gap-3 mb-3">
+<div class="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">System Healthy</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-black/30 rounded-full h-1.5 mb-1">
+<div class="bg-accent h-1.5 rounded-full" style="width: 92%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400">
+<span>Server Load</span>
+<span>92%</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Background Glows -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] dark:opacity-40 opacity-20"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[100px] dark:opacity-30 opacity-20"></div>
+</div>
+<!-- Top Header -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-[#292348] px-6 py-4 bg-surface-light/80 dark:bg-[#141122]/90 backdrop-blur-md z-10 sticky top-0">
+<div class="flex items-center gap-4 md:hidden">
+<button class="p-2 -ml-2 text-slate-600 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-lg font-bold font-display dark:text-white">MathMaster</h2>
+</div>
+<div class="hidden md:flex items-center gap-4">
+<h2 class="text-xl font-bold font-display text-slate-800 dark:text-white tracking-tight">Dashboard Overview</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 md:gap-6">
+<label class="hidden md:flex relative group max-w-md w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-slate-200 rounded-lg bg-slate-50 focus:ring-primary focus:border-primary dark:bg-[#292348] dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary transition-all" placeholder="Search students, payments..." type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2">
+<span class="text-xs text-slate-400 border border-slate-300 dark:border-slate-600 rounded px-1.5 py-0.5">⌘K</span>
+</div>
+</label>
+<div class="flex items-center gap-3">
+<button class="relative p-2 text-slate-500 hover:text-primary dark:text-slate-300 dark:hover:text-white transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-[#292348]">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-accent-secondary border-2 border-surface-light dark:border-[#141122]"></span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-[#292348] mx-1"></div>
+<button class="flex items-center gap-2 group">
+<div class="w-9 h-9 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 p-[2px]">
+<div class="w-full h-full rounded-full border-2 border-surface-light dark:border-[#141122] overflow-hidden" data-alt="Admin user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-go-FWW4vwQQPmm-0ddv42FhxCKJlYAb_x7LkhPV6yfa-GtrHXeEhgZwREAv3IZkb0mz9POrMs0t5lUU5n1Qfi1UDMtKg5HzeRHR6tX9lzzptx7BStIVmBnXqSn5l5DD3ojES3gsC7eApumN_kc3oF5DLbRUEiXdq3LqO-QZlWVTOIPxARGIbPOXb7jHRlXk4K211gclv37tFy-4oj9hYz9Ur6Ouax1TNzxzJxqi_8ly40a11TwHoll6jrpFI5-0LSGumnXT5XLvF'); background-size: cover;"></div>
+</div>
+<div class="hidden lg:flex flex-col items-start">
+<span class="text-sm font-bold text-slate-700 dark:text-white">Admin User</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Super Admin</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm hidden lg:block group-hover:translate-y-0.5 transition-transform">expand_more</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden p-6 z-10 custom-scrollbar">
+<div class="max-w-7xl mx-auto flex flex-col gap-6">
+<!-- Welcome & Quick Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-3xl font-display font-bold text-slate-900 dark:text-white">Welcome back, Administrator</h3>
+<p class="text-slate-500 dark:text-[#9b92c9] mt-1">Here is the platform health check for today.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-light dark:bg-[#292348] text-slate-700 dark:text-white border border-slate-200 dark:border-transparent hover:bg-slate-50 dark:hover:bg-[#322b55] transition-colors shadow-sm font-medium text-sm">
+<span class="material-symbols-outlined text-lg">download</span>
+                                Generate Report
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-glow transition-all font-medium text-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                                Invite Student
+                            </button>
+</div>
+</div>
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="glass-panel p-5 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">groups</span>
+</div>
+<div class="flex flex-col relative z-10">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Registered</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold font-display text-slate-900 dark:text-white">12,450</span>
+<span class="flex items-center text-green-500 text-xs font-bold mb-1 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                        +5%
+                                    </span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-white/5 h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 75%"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-5 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 border-l-4 border-l-accent">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-accent">bolt</span>
+</div>
+<div class="flex flex-col relative z-10">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Learners</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold font-display text-slate-900 dark:text-white">8,320</span>
+<span class="flex items-center text-green-500 text-xs font-bold mb-1 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                        +12%
+                                    </span>
+</div>
+<p class="text-xs text-slate-400 mt-4">Currently online: <span class="text-accent font-bold">452</span></p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-5 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-green-400">attach_money</span>
+</div>
+<div class="flex flex-col relative z-10">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Monthly Revenue</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold font-display text-slate-900 dark:text-white">$45.2k</span>
+<span class="flex items-center text-green-500 text-xs font-bold mb-1 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                        +8%
+                                    </span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-white/5 h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-green-400 h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-panel p-5 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 border-l-4 border-l-red-500">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-500">block</span>
+</div>
+<div class="flex flex-col relative z-10">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Blocked Accounts</span>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold font-display text-slate-900 dark:text-white">15</span>
+<span class="flex items-center text-red-500 text-xs font-bold mb-1 bg-red-500/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span>
+                                        +2
+                                    </span>
+</div>
+<p class="text-xs text-slate-400 mt-4">Requires Review: <span class="text-white font-bold">4</span></p>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Activity Chart -->
+<div class="lg:col-span-2 glass-panel p-6 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h4 class="text-lg font-bold font-display text-slate-900 dark:text-white">Platform Activity</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Student engagement over the last 7 days</p>
+</div>
+<div class="flex bg-slate-100 dark:bg-[#292348] p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-medium rounded bg-white dark:bg-primary shadow text-slate-900 dark:text-white">Weekly</button>
+<button class="px-3 py-1 text-xs font-medium rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Monthly</button>
+</div>
+</div>
+<div class="flex-1 min-h-[300px] w-full relative">
+<!-- Simulated Chart Graphic using SVG & CSS -->
+<div class="absolute inset-0 flex items-end justify-between px-2 pb-6 gap-2">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8 pr-2">
+<div class="w-full h-px bg-slate-200 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-200 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-200 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-200 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-200 dark:bg-white/5"></div>
+</div>
+<!-- SVG Curve -->
+<svg class="absolute inset-0 w-full h-[calc(100%-32px)] overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3713ec" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#3713ec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,80 C10,70 15,90 25,60 C35,30 40,40 50,20 C60,0 70,40 85,30 C95,20 100,10 100,10 V100 H0 Z" fill="url(#chartGradient)"></path>
+<path d="M0,80 C10,70 15,90 25,60 C35,30 40,40 50,20 C60,0 70,40 85,30 C95,20 100,10 100,10" fill="none" stroke="#3713ec" stroke-linecap="round" stroke-width="0.5" vector-effect="non-scaling-stroke"></path>
+<path d="M0,90 C15,90 25,75 35,80 C45,85 55,50 65,55 C75,60 85,45 100,50" fill="none" stroke="#00f0ff" stroke-dasharray="2,2" stroke-linecap="round" stroke-width="0.5" vector-effect="non-scaling-stroke"></path>
+</svg>
+<!-- X Axis Labels -->
+<div class="absolute bottom-0 w-full flex justify-between text-[10px] text-slate-400 px-1 font-medium font-mono uppercase">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+<!-- Tooltip Indicator (Fake) -->
+<div class="absolute left-[50%] top-[20%] -translate-x-1/2 flex flex-col items-center">
+<div class="bg-surface-dark text-white text-xs py-1 px-2 rounded shadow-lg border border-primary/30 whitespace-nowrap z-10">
+                                            Peak Usage: 1,240
+                                        </div>
+<div class="w-px h-[200px] bg-primary/50 border-r border-dashed border-primary"></div>
+<div class="w-3 h-3 bg-primary rounded-full absolute top-[calc(100%-8px)] shadow-[0_0_10px_#3713ec]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Widget - Top Students -->
+<div class="glass-panel p-6 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm flex flex-col">
+<h4 class="text-lg font-bold font-display text-slate-900 dark:text-white mb-4">Top Performers</h4>
+<div class="flex flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar max-h-[340px]">
+<!-- List Item 1 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="Student profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD05PXDZOf5jnSg81yl5rUf7nySu2QnTNf3jUq0f4Yq2ttnZs3-lDxnqiRpnoDH6F6bto7cuScyOkTCPNYg6r49c44Q3s4BGMzFVflVjgREFclqeuhfJdP8DIDl7B4zL_2KuCEobg33d5ZTlyRELhGfZ8rGC-iO0n5NKYs0bq3FIugc2ULXqlsmSa0gKvelD7KdE62EPjNgN85xM0KQBrNAMfCaNFdR9oyrhYBoX9-5dXe2-YX2DvxxYrBV1w-7B3hMJdTSDzAkVyFh');"></div>
+<div class="absolute -top-1 -right-1 bg-[#FFD700] text-black text-[8px] font-bold px-1 rounded shadow-sm">#1</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-800 dark:text-white">Alex Johnson</p>
+<p class="text-xs text-slate-500">XP: 12,450</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-green-500">+12%</p>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="Student profile avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUVY62ylS0-MF9BtwJhIXgJdNU2FU6nyR-cctCQSVhrIrhhU4sclMqUhkhDREFwrAaVrhXUkeD-KF0ffnaoBIMDfWke59vxGdxn0pyzYH5Lr4IqaibOQLXkIPdY2BVtiZ4DHqsppcHfo6nvZmsOh33-Jd_gKkSOWa7pU2tTD5xF8gbOnm5GID3JblgIZyhPpQV2sKw8Qduqj3M-2yvEoNXxeUyeGcIaeeH9k2mXK9S3ysDKq3TVzrnGEcZ8f2b1lD50DHgzo65gJCx');"></div>
+<div class="absolute -top-1 -right-1 bg-slate-300 text-black text-[8px] font-bold px-1 rounded shadow-sm">#2</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-800 dark:text-white">Sarah Smith</p>
+<p class="text-xs text-slate-500">XP: 11,200</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-green-500">+8%</p>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="Student profile avatar 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNxPg0624lH465bRiXpWKozU_O11dHYi_TlTK03ipAkS4z2dXjqAnWWikUexphF47sTIJZvu-AOY8YSkqYyct7znJ1qqUdEoTxj3e0DER4XeLS_r0vZm8dt85V-c-0wgP2YInprFR7CfKWWjz0Zmj1TPC3qdhutVY8_-At4MH9TXoXLG8I9o1PWEiz8GixNnfD8xRMpkrAqzjSHQ4XOqSABNfOCXkLRSo0jFz9JHLZbTZvmOlI7cqDH81xY18DEJJrc3CHEe7W6VIE');"></div>
+<div class="absolute -top-1 -right-1 bg-orange-400 text-black text-[8px] font-bold px-1 rounded shadow-sm">#3</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-800 dark:text-white">Mike Brown</p>
+<p class="text-xs text-slate-500">XP: 10,950</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-green-500">+15%</p>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="Student profile avatar 4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgNbiM8Cul_v-okXZ6eluX35DpEyBY4bo-CqcFkJkdAzqjpVou0YpVriroQgyI6aijUKuJ_LPF9UyI59aCoyVWT6pj-vc7kRDKHaOdeixkkOhy-38tdpnrf-jk05XAEyJ8QGp7PaTjM68fY-RnmoIOdS4iGjy5xLpiX7-GcZjbZWBIaOsJ3YL1Gv2FntOklf50V9IwfSUDkpqg3mw1UK3MSd8JKRQN1HVn71i_LefYd2zm_A5rHnGjb0_SqVTABsJVSAINRGjb831d');"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-800 dark:text-white">Emma Davis</p>
+<p class="text-xs text-slate-500">XP: 9,800</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-green-500">+4%</p>
+</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 text-xs font-medium text-primary hover:text-white hover:bg-primary rounded-lg border border-primary/20 transition-all">View Leaderboard</button>
+</div>
+</div>
+<!-- Bottom Grid: Recent Transactions & Map/Distribution -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">
+<!-- Recent Activity -->
+<div class="glass-panel p-6 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h4 class="text-lg font-bold font-display text-slate-900 dark:text-white">Recent Transactions</h4>
+<a class="text-xs text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs text-slate-500 border-b border-slate-200 dark:border-white/10">
+<th class="py-3 font-medium">Student</th>
+<th class="py-3 font-medium">Plan</th>
+<th class="py-3 font-medium">Date</th>
+<th class="py-3 font-medium text-right">Amount</th>
+<th class="py-3 font-medium text-right">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-3 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-[10px] font-bold text-blue-600 dark:text-blue-400">AJ</div>
+<span class="text-slate-700 dark:text-slate-300">Alex J.</span>
+</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Pro (Monthly)</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Oct 24</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">$19.99</td>
+<td class="py-3 text-right">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">PAID</span>
+</td>
+</tr>
+<tr class="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-3 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-[10px] font-bold text-purple-600 dark:text-purple-400">MD</div>
+<span class="text-slate-700 dark:text-slate-300">Maria D.</span>
+</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Basic (Yearly)</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Oct 23</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">$99.00</td>
+<td class="py-3 text-right">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">PAID</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-3 flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-[10px] font-bold text-red-600 dark:text-red-400">KT</div>
+<span class="text-slate-700 dark:text-slate-300">Kevin T.</span>
+</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Pro (Monthly)</td>
+<td class="py-3 text-slate-500 dark:text-slate-400">Oct 22</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">$19.99</td>
+<td class="py-3 text-right">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400">PENDING</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- User Distribution / Donut Chart approximation -->
+<div class="glass-panel p-6 rounded-xl bg-surface-light dark:bg-[#1c1833] shadow-sm flex flex-col items-center justify-center">
+<h4 class="text-lg font-bold font-display text-slate-900 dark:text-white mb-6 w-full text-left">User Status Overview</h4>
+<div class="flex flex-col sm:flex-row items-center gap-8">
+<!-- CSS Donut Chart -->
+<div class="relative w-40 h-40">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<!-- Background Circle -->
+<path class="text-slate-200 dark:text-white/5" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<!-- Segment 1: Active (Blue) - 70% -->
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="70, 100" stroke-width="3"></path>
+<!-- Segment 2: Pending (Cyan) - 20% -->
+<path class="text-accent" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="20, 100" stroke-dashoffset="-70" stroke-width="3"></path>
+<!-- Segment 3: Blocked (Pink) - 10% -->
+<path class="text-accent-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-2xl font-bold font-display dark:text-white">12.4k</span>
+<span class="text-[10px] text-slate-500 uppercase">Total</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(55,19,236,0.6)]"></div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">Active Students</span>
+<span class="text-xs text-slate-400 font-mono">8,680 (70%)</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-accent shadow-[0_0_8px_rgba(0,240,255,0.6)]"></div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">Pending Verification</span>
+<span class="text-xs text-slate-400 font-mono">2,480 (20%)</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-accent-secondary shadow-[0_0_8px_rgba(255,0,170,0.6)]"></div>
+<div class="flex flex-col">
+<span class="text-sm text-slate-600 dark:text-slate-300">Blocked/Inactive</span>
+<span class="text-xs text-slate-400 font-mono">1,240 (10%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

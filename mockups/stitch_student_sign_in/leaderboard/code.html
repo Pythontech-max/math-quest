@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathMaster Leaderboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3713ec",
+                        "primary-glow": "#5b3bf7",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131022",
+                        "card-dark": "#1d1933",
+                        "card-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #292348; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3713ec; 
+        }
+
+        /* Neon Glow Effects */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(55, 19, 236, 0.5);
+        }
+        .neon-border {
+            box-shadow: 0 0 15px rgba(55, 19, 236, 0.3), inset 0 0 10px rgba(55, 19, 236, 0.1);
+        }
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+        }
+        .silver-glow {
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.3);
+        }
+        .bronze-glow {
+            box-shadow: 0 0 20px rgba(205, 127, 50, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#292348] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4">
+<div class="max-w-6xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3 text-gray-900 dark:text-white group cursor-pointer">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">calculate</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">MathMaster</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Practice</a>
+<a class="text-primary dark:text-white text-sm font-bold relative after:content-[''] after:absolute after:-bottom-6 after:left-0 after:w-full after:h-1 after:bg-primary after:rounded-t-full" href="#">Leaderboard</a>
+<a class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-[#292348] dark:hover:bg-[#3b3267] transition-colors text-gray-600 dark:text-white relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="size-10 rounded-full bg-cover bg-center ring-2 ring-gray-200 dark:ring-[#3b3267]" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmipq9U21kdN1PzBBOUnff8NFrBE4twwLA1NIuu5xl7zNhagj6Al0TndJXAIrIZt4P2e_w2DqcBvAk0Ay0Au8fuOL_8DdS3bOCfUt4G4cAFaXNdU8jjcaxDEQ8R7AMBfMXpDn2AbnYTn3jbTr77QHRhV49JE8TfK5MQFkDEX2OVqtK8MA_glWeq02IIVSs7o57JfXnCRFD0Jyc_Hk60iOeaXmlIp5QxBUSUk5D3X3SEvQBAqL5q6btlF0-XGg-6Uv1gy_QbkovQXVb");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-1 w-full max-w-6xl mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
+<!-- Header & Segmented Control -->
+<div class="w-full max-w-3xl flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+<div class="text-center md:text-left">
+<h2 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-2">Leaderboard</h2>
+<p class="text-gray-500 dark:text-[#9b92c9] font-medium flex items-center justify-center md:justify-start gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                    Weekly Challenge Ends in 2d 4h
+                </p>
+</div>
+<div class="bg-gray-200 dark:bg-[#1d1933] p-1.5 rounded-full flex items-center shadow-inner">
+<button class="px-6 py-2 rounded-full bg-white dark:bg-primary shadow-sm text-gray-900 dark:text-white text-sm font-bold transition-all transform hover:scale-105">Weekly</button>
+<button class="px-6 py-2 rounded-full text-gray-500 dark:text-[#9b92c9] hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors">All-Time</button>
+<button class="px-6 py-2 rounded-full text-gray-500 dark:text-[#9b92c9] hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors">Friends</button>
+</div>
+</div>
+<!-- The Podium (Top 3) -->
+<div class="w-full max-w-3xl grid grid-cols-3 gap-4 items-end mb-16 px-2 md:px-12 relative">
+<!-- Background Decoration -->
+<div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full z-0 pointer-events-none"></div>
+<!-- 2nd Place -->
+<div class="relative z-10 flex flex-col items-center gap-3 order-1 md:order-1 translate-y-4">
+<div class="relative group cursor-pointer">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 text-gray-400 dark:text-[#c0c0c0] font-bold text-2xl flex flex-col items-center animate-bounce delay-100">
+<span class="material-symbols-outlined text-3xl">crown</span>
+<span class="text-sm font-medium">2nd</span>
+</div>
+<div class="size-20 md:size-24 rounded-full p-1 bg-gradient-to-b from-[#c0c0c0] to-transparent silver-glow">
+<div class="size-full rounded-full bg-cover bg-center border-4 border-[#131022]" data-alt="Portrait of the second place winner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtca4x2RHFYi1IR15-gEkIBHeQHUJcV5SY7vYzxng_SXXliqlVr-p3IdSby0Erni1yVthlqX80ztHYqfCvKmvojFkT52VlBOntsXkxdKljAbL0CqzaTIC-_dJ7ya9AzGV78IEqTFryQwn3WqA-K2MXq75jdKYhthSmwdEeCPdNJr2KjVBTo_dnYrYleC9MTTrunLFGdgc5OmwQbIPJ5OAkAFUNINdGl_XdsN12MgmgoiygzT4Vk40Ur6D22jeqkfzSVhb1teKBuEsQ");'></div>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gray-200 dark:bg-[#292348] text-gray-900 dark:text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg border border-white/10">
+                        @AlgebraQueen
+                    </div>
+</div>
+<div class="mt-4 text-center">
+<p class="text-primary font-bold text-lg md:text-xl">11,200</p>
+<p class="text-xs text-gray-500 dark:text-[#9b92c9]">XP</p>
+</div>
+</div>
+<!-- 1st Place -->
+<div class="relative z-10 flex flex-col items-center gap-3 order-2 md:order-2 -translate-y-4">
+<div class="relative group cursor-pointer">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 text-yellow-500 font-bold text-3xl flex flex-col items-center animate-bounce">
+<span class="material-symbols-outlined text-5xl drop-shadow-md">crown</span>
+</div>
+<div class="size-28 md:size-32 rounded-full p-1.5 bg-gradient-to-b from-[#ffd700] to-orange-500 gold-glow">
+<div class="size-full rounded-full bg-cover bg-center border-4 border-[#131022]" data-alt="Portrait of the first place champion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqc0nuu4R-o6IqmzI4qoYg5YtTmww1oiyBDdvwlnRI1dAmmz-426tXV8CtQrajnMmNM7jByDfsUXUebNcJyKneiug354EBeOpE95vNp-fMQIGyjAmPi_Kzoa_ShVBNSrxY22mv_9i2pyOKlRbmikzSuWwql5XDTishUlqX3nKKNE7FTx4zv6G7wbAdnxPpeXFAf6En0kcoYefZiip8gY4JKeJMVgBq3jMeti-RQIPd9FshbXUgyrDS6xzxeHNj0n5HVJ13IqFLRTjV");'></div>
+</div>
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-600 to-yellow-500 text-white text-sm font-bold px-4 py-1.5 rounded-full whitespace-nowrap shadow-xl border border-yellow-300/30">
+                        @MathWizard_99
+                    </div>
+</div>
+<div class="mt-5 text-center">
+<p class="text-white font-black text-2xl md:text-3xl neon-text">12,500</p>
+<p class="text-sm text-[#ffd700] font-medium tracking-widest uppercase">Champion</p>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="relative z-10 flex flex-col items-center gap-3 order-3 md:order-3 translate-y-6">
+<div class="relative group cursor-pointer">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 text-orange-400 dark:text-[#cd7f32] font-bold text-2xl flex flex-col items-center animate-bounce delay-200">
+<span class="material-symbols-outlined text-3xl">crown</span>
+<span class="text-sm font-medium">3rd</span>
+</div>
+<div class="size-20 md:size-24 rounded-full p-1 bg-gradient-to-b from-[#cd7f32] to-transparent bronze-glow">
+<div class="size-full rounded-full bg-cover bg-center border-4 border-[#131022]" data-alt="Portrait of the third place winner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKol5hI1_QT_AC3lAvh2-L9DEoKWUuqWU267Pu8_16meE1zcpcMzi03-DD1n4j1r8SKkbdo6qG5XuBNAqeW5u3cCAO0SPGueNL_XIKefL7HcnlYalkfQKJESGwfDdXTL5dm9GxJYwT8v9d70cl9BpsHquOtEQSMxu0t8Xcp2fIWLr0xNNY5BqVzbDAWrf8nI56oIrIf_J1sJJQUxZezvffbOnDifkIy-4qKTb4Uu7byxW2xJcuU7kNTzZGWDNkwddQ0ZDHlD1c200i");'></div>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gray-200 dark:bg-[#292348] text-gray-900 dark:text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg border border-white/10">
+                        @GeoGenius
+                    </div>
+</div>
+<div class="mt-4 text-center">
+<p class="text-primary font-bold text-lg md:text-xl">10,800</p>
+<p class="text-xs text-gray-500 dark:text-[#9b92c9]">XP</p>
+</div>
+</div>
+</div>
+<!-- Leaderboard List -->
+<div class="w-full max-w-3xl flex flex-col gap-3 relative z-10 pb-24">
+<!-- List Header -->
+<div class="flex items-center px-6 pb-2 text-xs font-bold text-gray-400 dark:text-[#5a5482] uppercase tracking-widest">
+<div class="w-12 text-center">Rank</div>
+<div class="flex-1 pl-4">Student</div>
+<div class="w-24 text-right">XP</div>
+</div>
+<!-- Rank 4 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">4</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9xuk9MdYKBIWfpbEFDlmju9NvUYHEA5I0YkaJd_5lza7PwjCNQimKGOsxBEf_Vw9cGJHjf6_W54cNc-y0XOWG0NCBsBNQVtS-586OPy3fR-95hZtFW9nRNwf57Na9lnZykmCYR5mEf3BuTyNQBv-vnuxY95ChmPZwBFbPAVJP9h-K5ONgJkrs1XDCfOgE6YBkHW2ygzELMs1fF7mGs8qPcjTJuhcH8NlL4jCBL5YgwIZ7AsLqe4fqOCWBx9UPpL5CNE4QFuKKQaAk");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">David Chen</span>
+<div class="flex gap-1">
+<span class="text-[10px] bg-green-500/10 text-green-500 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> +12%
+                            </span>
+</div>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">9,450</span>
+</div>
+</div>
+<!-- Rank 5 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">5</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDq_dGr0-ywTLG_zb03gNbaMQuR6f7nVXvELZSDfL2TMd8LvT48uWooDtgEV5OG4hcCyj-JOMEImXsCqkjZ7o_hCsMTJjBJ24cNXXSgLFmLXvc22i1QVFfxfQHoAzfe960EuzaN9b5eTe_g2Jdoz2mJdKV9weGhLss52J_qQQrr_g9zwHOuqcqp3VCcDCNv2qaFA4YQ-WpybCW9FTZDqc096bAK_zYpTOU3SDleXbZ4ymkHoIuJOpRayzVahSu7ZrpaYEABH8Vq8W7h");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">Sarah Jones</span>
+<div class="flex gap-1">
+<span class="text-[10px] bg-yellow-500/10 text-yellow-500 px-1.5 py-0.5 rounded">🔥 On Fire</span>
+</div>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">8,920</span>
+</div>
+</div>
+<!-- Rank 6 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">6</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhMw-vWZfkQitJ5miQlKQsicXVe2yPmVnwD3x2ehI6TxIS3pjK6CtWriQTwCAyJHKDPqYROHDT4RqKyMTOv8SxiZMaGNXMaWZ_3G8EZA-mRlX0Y76OrBmWsG_SbGL38NL88QY0jZsB77GFtoZ95nzEr3YtH5KFATZ2KJgXtpoLDUlOC7pB0hcxDRnfrEuUVPydFdChxuEi_TPy-4uotZky_78ryW9tFrjaZ_NVK57i-ydkIdc2_U0tVO5pLmdf7rnEa6i1JLx02AmP");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">Mike Ross</span>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">8,100</span>
+</div>
+</div>
+<!-- Rank 7 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">7</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCD54cfSVT0efrqYTSwVOCArK-yldxxF9D-o5raD2-D6XiDmy0I8jgv97eW3y8Akl_vr5rlfOpdyjXzeI6LInXxyj5dB6qfRcqVlxaFuDc_vIVbdfeJB3quQlpWquOh4JKQRjOaE3NekP7AfsINjnpbaVwGz_-j7DAy6Gsh1UtPhc_F3G1vOP8Y5a_o0vfpIKaYinSaQqU6X4mzaAZoopzTpXiRb5yZcP5O_-nGjmt40_-MjRMxltpjnH-4zaRCzXgf7Xp2pkyZz-Rg");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">Emily Clark</span>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">7,850</span>
+</div>
+</div>
+<!-- Rank 8 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">8</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLom0x88rHGc9gUwrJknrS0rpi9DJ_1pzX-n9MluiV8oH201PMwuvr_2IK2dp4kePLDxEg870kufIJWz-oDisdUqVWcHE_v6AJ64oFqjMQWgvx8fh1hDeHh3JIoFrNpp8trFXlk5Wt5h5NFkowPCJZ9O8pPN5guDFWILMOni72lmLC9p0T0sTw3X4EngGjDIKlGrUrd5TZAoUz-KwXDfHC-9Y8NEWx7CU6q5ZyFxG--0pNv7i1ZL4PISSiKNHyaxr8cstaSLcJw7nT");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">Lucas Silva</span>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">7,600</span>
+</div>
+</div>
+<!-- Rank 9 -->
+<div class="group flex items-center justify-between p-3 rounded-full bg-white dark:bg-[#1d1933] border border-gray-100 dark:border-[#292348] hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 flex justify-center">
+<span class="text-gray-500 dark:text-gray-400 font-bold text-lg">9</span>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdwRHCFuSVaVfmDVvSawy2AZIw2rycHEVweUoY3Ltuf88dNDTtv4EtN2rft7jl4NYUm4-0apHnHFcPv0jUK_aM5-LCXow0RbbI34Ii2_1y8cltB2Tjuv_KJSjE8DqyrJpAZI8m8W05uOrWmf15FqTxBXINk0hqHQty8SIEuWD8b_VlaFxZwK6CVMTx74h4vIRF5bVImUKnBb-EVNTRELQsJ_nWOz9H3InfbFyXOcfZU_k_4WSD_uGZWju_WuWCF6brJAtdY4SvsIY2");'></div>
+<div class="flex flex-col">
+<span class="text-gray-900 dark:text-white font-bold text-sm">Jessica Wu</span>
+</div>
+</div>
+<div class="w-24 text-right pr-4">
+<span class="text-primary font-bold text-lg">7,420</span>
+</div>
+</div>
+<!-- Loader / View More -->
+<div class="flex justify-center py-4">
+<div class="flex gap-1">
+<div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+<div class="w-2 h-2 bg-primary rounded-full animate-bounce delay-100"></div>
+<div class="w-2 h-2 bg-primary rounded-full animate-bounce delay-200"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky User Rank (Footer) -->
+<div class="fixed bottom-0 left-0 w-full z-50 px-4 pb-4">
+<div class="max-w-3xl mx-auto">
+<div class="relative w-full bg-[#141122] dark:bg-[#0c0a15] rounded-full p-2 pr-6 shadow-2xl border border-primary/30 neon-border flex items-center justify-between overflow-hidden">
+<!-- Shine effect -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none"></div>
+<div class="flex items-center gap-4 flex-1 relative z-10">
+<div class="w-12 flex justify-center items-center flex-col">
+<span class="material-symbols-outlined text-green-400 text-sm">arrow_drop_up</span>
+<span class="text-white font-bold text-lg leading-none">42</span>
+</div>
+<div class="size-12 rounded-full p-[2px] bg-gradient-to-tr from-primary to-purple-500">
+<div class="size-full rounded-full bg-cover bg-center border-2 border-[#141122]" data-alt="Current user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnDBH9H62dqKbMAGKI3FyU2SSQ_M2aC3oYyiI8MkwufxVePHMUJCnzew20fUVqivvThucVoOMd9bffyMgmIEVbBN9g82Mv5upPeMLug5ayOMAmCguowoQPcKsIAsK_O3ZqnIxSjyq0jS0K5nCTypikeCOucLARMx44SYhIJRvx2LtS9Emyk6sjeiYsGJ9-fxEHYm9S0TfvyUeluoZPFZ2exUpQRAQ4AAHDPEK3BUVPL0pIN_RHY4P1L4inuM_5HgKvM_Sdn-_Z3rgP");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm">You (Sophia)</span>
+<span class="text-xs text-gray-400">Top 15%</span>
+</div>
+</div>
+<div class="text-right relative z-10">
+<span class="text-white font-black text-xl tracking-tight">4,250</span>
+<span class="text-xs text-primary font-bold ml-1">XP</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>
