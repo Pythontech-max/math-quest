@@ -3,16 +3,27 @@
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { NeonButton } from "@/components/ui/NeonButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import clsx from "clsx";
 
 type SettingsTab = "general" | "appearance" | "notifications" | "security" | "billing";
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<SettingsTab>("general");
-    const [darkMode, setDarkMode] = useState(true);
+    const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme();
+    const [selectedColor, setSelectedColor] = useState("#6C5CE7");
+    const [fontSize, setFontSize] = useState("Medium");
     const [emailNotifications, setEmailNotifications] = useState(true);
     const [pushNotifications, setPushNotifications] = useState(false);
+
+    // Avoid hydration mismatch
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const isDarkMode = mounted ? theme === "dark" : true;
 
     const tabs: { id: SettingsTab; label: string; icon: string }[] = [
         { id: "general", label: "General", icon: "tune" },
@@ -132,62 +143,66 @@ export default function SettingsPage() {
                             <GlassPanel className="p-6">
                                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Theme & Display</h3>
                                 <div className="space-y-6">
-                                    <div className="flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5">
+                                    <div className="flex items-center justify-between p-4 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-white/5">
                                         <div>
                                             <p className="text-slate-900 dark:text-white font-medium">Dark Mode</p>
                                             <p className="text-sm text-slate-500 dark:text-slate-400">Use dark theme across the platform</p>
                                         </div>
                                         <button
-                                            onClick={() => setDarkMode(!darkMode)}
+                                            onClick={() => setTheme(isDarkMode ? "light" : "dark")}
                                             className={clsx(
                                                 "relative w-14 h-8 rounded-full transition-colors",
-                                                darkMode ? "bg-primary" : "bg-slate-600"
+                                                isDarkMode ? "bg-primary" : "bg-slate-300"
                                             )}
                                         >
                                             <span className={clsx(
-                                                "absolute top-1 size-6 rounded-full bg-white transition-all",
-                                                darkMode ? "left-7" : "left-1"
+                                                "absolute top-1 size-6 rounded-full bg-white shadow transition-all",
+                                                isDarkMode ? "left-7" : "left-1"
                                             )} />
                                         </button>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-300 mb-3">
+                                        <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-3">
                                             Primary Color
                                         </label>
                                         <div className="flex gap-3">
                                             {["#6C5CE7", "#00D9FF", "#FF6B6B", "#54E346", "#FFA726"].map((color) => (
                                                 <button
                                                     key={color}
+                                                    onClick={() => setSelectedColor(color)}
                                                     className={clsx(
-                                                        "size-10 rounded-full ring-2 ring-offset-2 ring-offset-background-dark transition-all",
-                                                        color === "#6C5CE7" ? "ring-white" : "ring-transparent hover:ring-white/50"
+                                                        "size-10 rounded-full ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark transition-all",
+                                                        selectedColor === color ? "ring-primary dark:ring-white" : "ring-transparent hover:ring-slate-300 dark:hover:ring-white/50"
                                                     )}
                                                     style={{ backgroundColor: color }}
                                                 />
                                             ))}
                                         </div>
+                                        <p className="text-xs text-slate-400 mt-2">Note: Color changes will be available in a future update</p>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                                        <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
                                             Font Size
                                         </label>
                                         <div className="flex gap-2">
                                             {["Small", "Medium", "Large"].map((size) => (
                                                 <button
                                                     key={size}
+                                                    onClick={() => setFontSize(size)}
                                                     className={clsx(
                                                         "px-4 py-2 rounded-xl text-sm font-medium transition-colors",
-                                                        size === "Medium"
+                                                        fontSize === size
                                                             ? "bg-primary text-white"
-                                                            : "bg-surface-dark text-slate-400 hover:text-white border border-white/10"
+                                                            : "bg-slate-100 dark:bg-surface-dark text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10"
                                                     )}
                                                 >
                                                     {size}
                                                 </button>
                                             ))}
                                         </div>
+                                        <p className="text-xs text-slate-400 mt-2">Note: Font size changes will be available in a future update</p>
                                     </div>
                                 </div>
                             </GlassPanel>
