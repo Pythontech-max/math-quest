@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import clsx from "clsx";
+import { signOut } from "next-auth/react";
 import { ThemeSwitcher } from "../ui/ThemeSwitcher";
 
 export function Sidebar() {
@@ -86,6 +89,17 @@ export function Sidebar() {
                             <span>92%</span>
                         </div>
                     </div>
+
+                    {/* Logout Button */}
+                    <button
+                        onClick={() => signOut({ callbackUrl: "/auth/signin" })}
+                        className="flex items-center gap-3 w-full mt-4 px-3 py-3 rounded-lg text-slate-600 dark:text-[#9b92c9] hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-all group"
+                    >
+                        <span className="material-symbols-outlined group-hover:scale-110 transition-transform">
+                            logout
+                        </span>
+                        <span className="text-sm font-medium">Logout</span>
+                    </button>
                 </div>
             </div>
         </aside>

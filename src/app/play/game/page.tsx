@@ -48,6 +48,28 @@ function GameLogic() {
                 ans = a / b;
                 text = `${a} ÷ ${b} = ?`;
                 break;
+            case "place_values":
+                // Generate place value questions
+                const placeTypes = [
+                    { name: "ones", divisor: 1, mod: 10 },
+                    { name: "tens", divisor: 10, mod: 10 },
+                    { name: "hundreds", divisor: 100, mod: 10 },
+                ];
+                const maxNumber = difficulty === "easy" ? 99 : difficulty === "medium" ? 999 : 9999;
+                const minNumber = difficulty === "easy" ? 10 : difficulty === "medium" ? 100 : 1000;
+                const num = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+
+                // Filter places based on difficulty
+                const availablePlaces = difficulty === "easy"
+                    ? placeTypes.slice(0, 2) // ones, tens
+                    : difficulty === "medium"
+                        ? placeTypes // ones, tens, hundreds
+                        : [...placeTypes, { name: "thousands", divisor: 1000, mod: 10 }];
+
+                const place = availablePlaces[Math.floor(Math.random() * availablePlaces.length)];
+                ans = Math.floor(num / place.divisor) % place.mod;
+                text = `What is the ${place.name} digit in ${num}?`;
+                break;
             case "addition":
             default:
                 ans = a + b;

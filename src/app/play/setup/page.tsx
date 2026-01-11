@@ -1,6 +1,7 @@
 "use client";
 
 import { NeonButton } from "@/components/ui/NeonButton";
+import { StudentHeader } from "@/components/ui/StudentHeader";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,21 +23,11 @@ export default function SetupPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background-dark/90 flex flex-col items-center">
-            {/* Top Header */}
-            <header className="flex items-center justify-between px-6 py-6 sticky top-0 z-50 bg-background-dark/90 backdrop-blur-md border-b border-white/5 w-full max-w-[600px]">
-                <button
-                    onClick={() => router.back()}
-                    className="size-10 flex items-center justify-center rounded-full bg-slate-800/50 hover:bg-slate-700/50 text-white transition-colors"
-                >
-                    <span className="material-symbols-outlined">arrow_back</span>
-                </button>
-                <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-primary">rocket_launch</span>
-                    <h1 className="text-lg font-bold tracking-tight text-white">Mission Control</h1>
-                </div>
-                <div className="size-10 bg-slate-800 rounded-full"></div> {/* Placeholder avatar */}
-            </header>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col items-center">
+            {/* Top Header with Theme & Logout */}
+            <div className="w-full max-w-[600px]">
+                <StudentHeader title="Mission Control" />
+            </div>
 
             <main className="flex-1 px-6 py-8 flex flex-col gap-10 w-full max-w-[600px] mb-24">
                 <div className="flex flex-col gap-2">
@@ -58,6 +49,7 @@ export default function SetupPage() {
                             { id: "subtraction", label: "Subtraction", icon: "remove" },
                             { id: "multiplication", label: "Multiplication", icon: "close" },
                             { id: "division", label: "Division", icon: "percent" },
+                            { id: "place_values", label: "Place Values", icon: "pin" },
                         ].map((op) => (
                             <label key={op.id} className="cursor-pointer group">
                                 <input

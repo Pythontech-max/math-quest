@@ -23,6 +23,7 @@ enum OperationType {
   SUBTRACTION
   MULTIPLICATION
   DIVISION
+  PLACE_VALUES
   MIXED
 }
 
