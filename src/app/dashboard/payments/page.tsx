@@ -63,13 +63,13 @@ export default function PaymentsPage() {
     );
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-background-dark">
+        <div className="flex h-screen w-full overflow-hidden bg-background-light dark:bg-background-dark">
             <Sidebar />
             <main className="flex-1 flex flex-col h-full overflow-hidden">
                 {/* Header */}
-                <header className="flex items-center justify-between border-b border-[#292348] px-6 py-4 bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
+                <header className="flex items-center justify-between border-b border-slate-200 dark:border-[#292348] px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-xl font-bold font-display text-white">Payment Tracking</h2>
+                        <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">Payment Tracking</h2>
                     </div>
                     <div className="flex items-center gap-4">
                         <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-dark border border-white/10 text-slate-300 hover:text-white transition-colors">

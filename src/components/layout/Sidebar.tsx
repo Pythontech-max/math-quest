@@ -1,5 +1,6 @@
 import Link from "next/link";
 import clsx from "clsx";
+import { ThemeSwitcher } from "../ui/ThemeSwitcher";
 
 export function Sidebar() {
     const navItems = [
@@ -60,9 +61,14 @@ export function Sidebar() {
                     )}
                 </nav>
 
+                {/* Theme Switcher */}
+                <div className="mb-6 px-2">
+                    <ThemeSwitcher />
+                </div>
+
                 {/* System Health */}
                 <div className="mt-auto">
-                    <div className="rounded-xl bg-gradient-to-br from-[#292348] to-primary/20 p-4 border border-slate-200 dark:border-[#292348]">
+                    <div className="rounded-xl bg-slate-50 dark:bg-gradient-to-br dark:from-[#292348] dark:to-primary/20 p-4 border border-slate-200 dark:border-[#292348]">
                         <div className="flex items-center gap-3 mb-3">
                             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
                             <span className="text-xs font-medium text-slate-600 dark:text-slate-300">

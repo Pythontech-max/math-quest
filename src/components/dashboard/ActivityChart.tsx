@@ -57,9 +57,8 @@ export function ActivityChart() {
                     <span>Sun</span>
                 </div>
 
-                {/* Tooltip Indicator (Fake) */}
                 <div className="absolute left-[50%] top-[20%] -translate-x-1/2 flex flex-col items-center">
-                    <div className="bg-surface-dark text-white text-xs py-1 px-2 rounded shadow-lg border border-primary/30 whitespace-nowrap z-10">
+                    <div className="bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xs py-1 px-2 rounded shadow-lg border border-primary/30 whitespace-nowrap z-10">
                         Peak Usage: 1,240
                     </div>
                     <div className="w-px h-[200px] bg-primary/50 border-r border-dashed border-primary"></div>

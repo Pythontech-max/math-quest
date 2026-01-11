@@ -35,13 +35,13 @@ export default function ReportsPage() {
     const maxSessions = Math.max(...weeklyData.map(d => d.sessions));
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-background-dark">
+        <div className="flex h-screen w-full overflow-hidden bg-background-light dark:bg-background-dark">
             <Sidebar />
             <main className="flex-1 flex flex-col h-full overflow-hidden">
                 {/* Header */}
-                <header className="flex items-center justify-between border-b border-[#292348] px-6 py-4 bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
+                <header className="flex items-center justify-between border-b border-slate-200 dark:border-[#292348] px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-xl font-bold font-display text-white">Analytics & Reports</h2>
+                        <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">Analytics & Reports</h2>
                     </div>
                     <div className="flex items-center gap-4">
                         <select className="px-4 py-2 rounded-xl bg-surface-dark border border-white/10 text-slate-300 focus:outline-none focus:border-primary">
@@ -138,7 +138,7 @@ export default function ReportsPage() {
                         {/* Top Performers Table */}
                         <GlassPanel className="p-6">
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-lg font-bold text-white">Top Performing Students</h3>
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Top Performing Students</h3>
                                 <button className="text-sm text-primary hover:text-primary/80 transition-colors">
                                     View All →
                                 </button>
@@ -158,9 +158,9 @@ export default function ReportsPage() {
                                         <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                             <td className="p-3">
                                                 <span className={`inline-flex items-center justify-center size-8 rounded-full font-bold text-sm ${i === 0 ? "bg-yellow-500/20 text-yellow-400" :
-                                                        i === 1 ? "bg-slate-400/20 text-slate-300" :
-                                                            i === 2 ? "bg-orange-500/20 text-orange-400" :
-                                                                "bg-surface-dark text-slate-400"
+                                                    i === 1 ? "bg-slate-400/20 text-slate-300" :
+                                                        i === 2 ? "bg-orange-500/20 text-orange-400" :
+                                                            "bg-surface-dark text-slate-400"
                                                     }`}>
                                                     {i + 1}
                                                 </span>
@@ -170,7 +170,7 @@ export default function ReportsPage() {
                                                     <div className="size-8 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-bold text-sm">
                                                         {student.name.charAt(0)}
                                                     </div>
-                                                    <span className="text-white font-medium">{student.name}</span>
+                                                    <span className="text-slate-800 dark:text-white font-medium">{student.name}</span>
                                                 </div>
                                             </td>
                                             <td className="p-3 text-right">
@@ -178,7 +178,7 @@ export default function ReportsPage() {
                                             </td>
                                             <td className="p-3 text-right">
                                                 <span className={`font-bold ${student.accuracy >= 90 ? "text-green-400" :
-                                                        student.accuracy >= 80 ? "text-yellow-400" : "text-red-400"
+                                                    student.accuracy >= 80 ? "text-yellow-400" : "text-red-400"
                                                     }`}>
                                                     {student.accuracy}%
                                                 </span>

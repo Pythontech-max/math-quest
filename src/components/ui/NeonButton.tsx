@@ -20,11 +20,11 @@ export function NeonButton({
 
     const variants = {
         primary:
-            "bg-primary text-white hover:brightness-110",
+            "bg-primary text-white hover:brightness-110 shadow-glow",
         secondary:
-            "bg-primary/10 text-white border border-primary/20 hover:bg-primary/20",
+            "bg-primary/10 text-primary dark:text-white border border-primary/20 hover:bg-primary/20",
         danger: "bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20",
-        google: "bg-white text-slate-900 hover:bg-slate-100 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(55,19,236,0.2)]",
+        google: "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm",
     };
 
     return (

@@ -49,15 +49,15 @@ export default function LeaderboardPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-background-dark flex flex-col">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col transition-colors duration-300">
             {/* Header */}
-            <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-background-dark/90 backdrop-blur-md border-b border-white/5">
+            <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
                 <div className="flex items-center gap-3">
-                    <Link href="/student" className="size-10 flex items-center justify-center rounded-full bg-surface-dark hover:bg-surface-dark/80 text-white transition-colors">
+                    <Link href="/student" className="size-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-surface-dark/80 text-slate-600 dark:text-white transition-colors">
                         <span className="material-symbols-outlined">arrow_back</span>
                     </Link>
                     <div>
-                        <h1 className="text-lg font-bold text-white font-display">Leaderboard</h1>
+                        <h1 className="text-lg font-bold text-slate-900 dark:text-white font-display">Leaderboard</h1>
                         <p className="text-xs text-slate-500">Top performers this {timeframe.replace("ly", "").replace("alltime", "all time")}</p>
                     </div>
                 </div>
@@ -99,9 +99,9 @@ export default function LeaderboardPage() {
                                 <div className="size-16 rounded-full bg-gradient-to-br from-slate-400 to-slate-600 flex items-center justify-center text-white text-xl font-bold border-4 border-slate-400/20">
                                     {podiumData[0].avatar}
                                 </div>
-                                <div className="mt-2 px-4 py-6 bg-surface-dark rounded-t-2xl text-center border border-white/5">
+                                <div className="mt-2 px-4 py-6 bg-white dark:bg-surface-dark rounded-t-2xl text-center border border-slate-200 dark:border-white/5 shadow-sm">
                                     <span className="text-2xl font-bold text-slate-400">2</span>
-                                    <p className="text-sm font-bold text-white mt-1">{podiumData[0].name.split(" ")[0]}</p>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">{podiumData[0].name.split(" ")[0]}</p>
                                     <p className="text-xs text-yellow-400">{podiumData[0].xp.toLocaleString()} XP</p>
                                 </div>
                             </div>
@@ -116,9 +116,9 @@ export default function LeaderboardPage() {
                                         <span className="material-symbols-outlined text-yellow-400 text-2xl">emoji_events</span>
                                     </div>
                                 </div>
-                                <div className="mt-2 px-6 py-8 bg-gradient-to-b from-yellow-500/10 to-surface-dark rounded-t-2xl text-center border border-yellow-500/20">
+                                <div className="mt-2 px-6 py-8 bg-gradient-to-b from-yellow-500/10 to-white dark:to-surface-dark rounded-t-2xl text-center border border-yellow-500/20 shadow-md">
                                     <span className="text-3xl font-bold text-yellow-400">1</span>
-                                    <p className="text-sm font-bold text-white mt-1">{podiumData[1].name.split(" ")[0]}</p>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">{podiumData[1].name.split(" ")[0]}</p>
                                     <p className="text-xs text-yellow-400">{podiumData[1].xp.toLocaleString()} XP</p>
                                 </div>
                             </div>
@@ -128,9 +128,9 @@ export default function LeaderboardPage() {
                                 <div className="size-16 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-white text-xl font-bold border-4 border-amber-600/20">
                                     {podiumData[2].avatar}
                                 </div>
-                                <div className="mt-2 px-4 py-6 bg-surface-dark rounded-t-2xl text-center border border-white/5">
+                                <div className="mt-2 px-4 py-6 bg-white dark:bg-surface-dark rounded-t-2xl text-center border border-slate-200 dark:border-white/5 shadow-sm">
                                     <span className="text-2xl font-bold text-amber-600">3</span>
-                                    <p className="text-sm font-bold text-white mt-1">{podiumData[2].name.split(" ")[0]}</p>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">{podiumData[2].name.split(" ")[0]}</p>
                                     <p className="text-xs text-yellow-400">{podiumData[2].xp.toLocaleString()} XP</p>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@ export default function LeaderboardPage() {
                                         {user.avatar}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="font-bold text-white">{user.name}</p>
+                                        <p className="font-bold text-slate-900 dark:text-white">{user.name}</p>
                                         <p className="text-xs text-slate-500">{user.games} games • {user.accuracy}% accuracy</p>
                                     </div>
                                     <span className="text-yellow-400 font-bold">{user.xp.toLocaleString()} XP</span>
@@ -161,7 +161,7 @@ export default function LeaderboardPage() {
                         <span className="text-lg font-bold text-primary">#{currentUserRank}</span>
                         <div className="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">Y</div>
                         <div>
-                            <p className="font-bold text-white">You</p>
+                            <p className="font-bold text-slate-900 dark:text-white">You</p>
                             <p className="text-xs text-slate-400">Keep playing to climb!</p>
                         </div>
                     </div>

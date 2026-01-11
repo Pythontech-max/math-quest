@@ -122,13 +122,13 @@ export default function StudentsPage() {
     const unpaidCount = students.filter(s => !s.isPaid).length;
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-background-dark">
+        <div className="flex h-screen w-full overflow-hidden bg-background-light dark:bg-background-dark">
             <Sidebar />
             <main className="flex-1 flex flex-col h-full overflow-hidden relative">
                 {/* Header */}
-                <header className="flex items-center justify-between border-b border-[#292348] px-6 py-4 bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
+                <header className="flex items-center justify-between border-b border-slate-200 dark:border-[#292348] px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-xl font-bold font-display text-white">Student Management</h2>
+                        <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">Student Management</h2>
                         <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
                             {students.length} Total
                         </span>
@@ -202,7 +202,7 @@ export default function StudentsPage() {
                 )}
 
                 {/* Filters */}
-                <div className="px-6 py-4 flex flex-wrap gap-4 border-b border-[#292348]">
+                <div className="px-6 py-4 flex flex-wrap gap-4 border-b border-slate-200 dark:border-[#292348]">
                     <div className="relative flex-1 max-w-md">
                         <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
                             <span className="material-symbols-outlined text-xl">search</span>
@@ -212,7 +212,7 @@ export default function StudentsPage() {
                             placeholder="Search by name or email..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
+                            className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
                         />
                     </div>
                     <div className="flex gap-2">

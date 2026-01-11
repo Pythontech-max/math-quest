@@ -23,13 +23,13 @@ export default function SettingsPage() {
     ];
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-background-dark">
+        <div className="flex h-screen w-full overflow-hidden bg-background-light dark:bg-background-dark">
             <Sidebar />
             <main className="flex-1 flex flex-col h-full overflow-hidden">
                 {/* Header */}
-                <header className="flex items-center justify-between border-b border-[#292348] px-6 py-4 bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
+                <header className="flex items-center justify-between border-b border-slate-200 dark:border-[#292348] px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md sticky top-0 z-10">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-xl font-bold font-display text-white">Settings</h2>
+                        <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">Settings</h2>
                     </div>
                     <NeonButton variant="primary" icon={<span className="material-symbols-outlined text-sm">save</span>}>
                         Save Changes
@@ -48,8 +48,8 @@ export default function SettingsPage() {
                                     className={clsx(
                                         "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap",
                                         activeTab === tab.id
-                                            ? "bg-primary text-white"
-                                            : "bg-surface-dark text-slate-400 hover:text-white border border-white/10"
+                                            ? "bg-primary text-white shadow-lg shadow-primary/20"
+                                            : "bg-white dark:bg-surface-dark text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white border border-slate-200 dark:border-white/10"
                                     )}
                                 >
                                     <span className="material-symbols-outlined text-lg">{tab.icon}</span>
@@ -62,7 +62,7 @@ export default function SettingsPage() {
                         {activeTab === "general" && (
                             <div className="space-y-6">
                                 <GlassPanel className="p-6">
-                                    <h3 className="text-lg font-bold text-white mb-6">Platform Settings</h3>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Platform Settings</h3>
                                     <div className="space-y-6">
                                         <div>
                                             <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -99,7 +99,7 @@ export default function SettingsPage() {
                                 </GlassPanel>
 
                                 <GlassPanel className="p-6">
-                                    <h3 className="text-lg font-bold text-white mb-6">XP & Rewards</h3>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">XP & Rewards</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                                             <input
                                                 type="number"
                                                 defaultValue="10"
-                                                className="w-full px-4 py-3 bg-surface-dark border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary transition-colors"
+                                                className="w-full px-4 py-3 bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-primary transition-colors"
                                             />
                                         </div>
                                         <div>
@@ -130,12 +130,12 @@ export default function SettingsPage() {
                         {/* Appearance Settings */}
                         {activeTab === "appearance" && (
                             <GlassPanel className="p-6">
-                                <h3 className="text-lg font-bold text-white mb-6">Theme & Display</h3>
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Theme & Display</h3>
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5">
                                         <div>
-                                            <p className="text-white font-medium">Dark Mode</p>
-                                            <p className="text-sm text-slate-400">Use dark theme across the platform</p>
+                                            <p className="text-slate-900 dark:text-white font-medium">Dark Mode</p>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Use dark theme across the platform</p>
                                         </div>
                                         <button
                                             onClick={() => setDarkMode(!darkMode)}
@@ -207,8 +207,8 @@ export default function SettingsPage() {
                                     ].map((item) => (
                                         <div key={item.id} className="flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5">
                                             <div>
-                                                <p className="text-white font-medium">{item.label}</p>
-                                                <p className="text-sm text-slate-400">{item.desc}</p>
+                                                <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
+                                                <p className="text-sm text-slate-500 dark:text-slate-400">{item.desc}</p>
                                             </div>
                                             <button
                                                 onClick={() => item.setter(!item.value)}
@@ -232,7 +232,7 @@ export default function SettingsPage() {
                         {activeTab === "security" && (
                             <div className="space-y-6">
                                 <GlassPanel className="p-6">
-                                    <h3 className="text-lg font-bold text-white mb-6">Password</h3>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Password</h3>
                                     <div className="space-y-4">
                                         <div>
                                             <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -241,7 +241,7 @@ export default function SettingsPage() {
                                             <input
                                                 type="password"
                                                 placeholder="••••••••"
-                                                className="w-full px-4 py-3 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
+                                                className="w-full px-4 py-3 bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
                                             />
                                         </div>
                                         <div>
@@ -251,7 +251,7 @@ export default function SettingsPage() {
                                             <input
                                                 type="password"
                                                 placeholder="••••••••"
-                                                className="w-full px-4 py-3 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
+                                                className="w-full px-4 py-3 bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary transition-colors"
                                             />
                                         </div>
                                         <NeonButton variant="secondary">Update Password</NeonButton>
@@ -259,10 +259,10 @@ export default function SettingsPage() {
                                 </GlassPanel>
 
                                 <GlassPanel className="p-6">
-                                    <h3 className="text-lg font-bold text-white mb-6">Two-Factor Authentication</h3>
-                                    <div className="flex items-center justify-between p-4 bg-surface-dark rounded-xl border border-white/5">
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Two-Factor Authentication</h3>
+                                    <div className="flex items-center justify-between p-4 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-white/5 shadow-sm">
                                         <div>
-                                            <p className="text-white font-medium">Enable 2FA</p>
+                                            <p className="text-slate-900 dark:text-white font-medium">Enable 2FA</p>
                                             <p className="text-sm text-slate-400">Add an extra layer of security to your account</p>
                                         </div>
                                         <NeonButton variant="secondary">Setup 2FA</NeonButton>
@@ -276,13 +276,13 @@ export default function SettingsPage() {
                             <div className="space-y-6">
                                 <GlassPanel className="p-6">
                                     <div className="flex items-center justify-between mb-6">
-                                        <h3 className="text-lg font-bold text-white">Current Plan</h3>
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Current Plan</h3>
                                         <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm">Pro</span>
                                     </div>
-                                    <div className="p-4 bg-surface-dark rounded-xl border border-white/5 mb-4">
+                                    <div className="p-4 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-white/5 mb-4 shadow-sm">
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="text-white font-medium">Pro Plan</span>
-                                            <span className="text-2xl font-bold text-white">$49<span className="text-sm text-slate-400">/mo</span></span>
+                                            <span className="text-slate-900 dark:text-white font-medium">Pro Plan</span>
+                                            <span className="text-2xl font-bold text-slate-900 dark:text-white">$49<span className="text-sm text-slate-500 dark:text-slate-400">/mo</span></span>
                                         </div>
                                         <p className="text-sm text-slate-400">Unlimited students, advanced analytics, priority support</p>
                                     </div>

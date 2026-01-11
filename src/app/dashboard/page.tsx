@@ -6,33 +6,57 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { ActivityChart } from "@/components/dashboard/ActivityChart";
 import { UserDonut } from "@/components/dashboard/UserDonut";
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 
 export default function Dashboard() {
     const [stats, setStats] = useState({
         totalUsers: 0,
         activeUsers: 0,
         revenue: 0,
-        blockedUsers: 0 // We might need to add this to API, but for now defaulting
+        blockedUsers: 0
     });
+    const [performers, setPerformers] = useState<any[]>([]);
+    const [transactions, setTransactions] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchData = async () => {
+            setIsLoading(true);
             try {
-                const res = await fetch('/api/stats');
-                if (res.ok) {
-                    const data = await res.json();
-                    setStats(prev => ({
-                        ...prev,
-                        totalUsers: data.totalUsers,
-                        activeUsers: data.activeUsers,
-                        revenue: data.revenue
-                    }));
+                const [statsRes, leaderboardRes, paymentsRes] = await Promise.all([
+                    fetch('/api/stats'),
+                    fetch('/api/leaderboard?timeframe=alltime'),
+                    fetch('/api/payments')
+                ]);
+
+                if (statsRes.ok) {
+                    const data = await statsRes.ok ? await statsRes.json() : null;
+                    if (data) {
+                        setStats(prev => ({
+                            ...prev,
+                            totalUsers: data.totalUsers,
+                            activeUsers: data.activeUsers,
+                            revenue: data.revenue
+                        }));
+                    }
+                }
+
+                if (leaderboardRes.ok) {
+                    const data = await leaderboardRes.json();
+                    setPerformers(data.slice(0, 5));
+                }
+
+                if (paymentsRes.ok) {
+                    const data = await paymentsRes.json();
+                    setTransactions(data.payments.slice(0, 5));
                 }
             } catch (error) {
-                console.error("Failed to fetch stats", error);
+                console.error("Failed to fetch dashboard data", error);
+            } finally {
+                setIsLoading(false);
             }
         }
-        fetchStats();
+        fetchData();
     }, []);
 
     return (
@@ -41,8 +65,8 @@ export default function Dashboard() {
             <main className="flex-1 flex flex-col h-full overflow-hidden relative">
                 {/* Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                    <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] dark:opacity-40 opacity-20"></div>
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[100px] dark:opacity-30 opacity-20"></div>
+                    <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/10 dark:bg-primary/20 rounded-full blur-[120px] opacity-20 dark:opacity-40"></div>
+                    <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] opacity-10 dark:opacity-30"></div>
                 </div>
 
                 {/* Top Header */}
@@ -60,7 +84,7 @@ export default function Dashboard() {
                                 </span>
                             </div>
                             <input
-                                className="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-slate-200 rounded-lg bg-slate-50 focus:ring-primary focus:border-primary dark:bg-[#292348] dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary transition-all"
+                                className="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-slate-200 rounded-lg bg-white dark:bg-[#292348] dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary transition-all shadow-sm"
                                 placeholder="Search students, payments..."
                                 type="text"
                             />
@@ -73,8 +97,8 @@ export default function Dashboard() {
                             <div className="h-8 w-px bg-slate-200 dark:bg-[#292348] mx-1"></div>
                             <button className="flex items-center gap-2 group">
                                 <div className="w-9 h-9 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 p-[2px]">
-                                    <div className="w-full h-full rounded-full bg-slate-800 border-2 border-surface-light dark:border-[#141122] overflow-hidden flex items-center justify-center">
-                                        <span className="text-xs text-white">AD</span>
+                                    <div className="w-full h-full rounded-full bg-white dark:bg-slate-800 border-2 border-surface-light dark:border-[#141122] overflow-hidden flex items-center justify-center">
+                                        <span className="text-xs text-slate-900 dark:text-white font-bold">AD</span>
                                     </div>
                                 </div>
                                 <div className="hidden lg:flex flex-col items-start">
@@ -154,28 +178,44 @@ export default function Dashboard() {
                                     Top Performers
                                 </h4>
                                 <div className="flex flex-col gap-4 overflow-y-auto pr-2 max-h-[340px]">
-                                    {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
-                                            <div className="relative">
-                                                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold">{i}</div>
-                                                {i <= 3 && <div className="absolute -top-1 -right-1 bg-yellow-400 text-black text-[8px] font-bold px-1 rounded shadow-sm">#{i}</div>}
-                                            </div>
-                                            <div className="flex-1">
-                                                <p className="text-sm font-bold text-slate-800 dark:text-white">Student {i}</p>
-                                                <p className="text-xs text-slate-500">XP: {10000 - i * 500}</p>
-                                            </div>
-                                            <div className="text-right">
-                                                <p className="text-sm font-bold text-green-500">+{10 - i}%</p>
-                                            </div>
+                                    {isLoading ? (
+                                        <div className="flex flex-col gap-4 animate-pulse">
+                                            {[1, 2, 3].map(i => <div key={i} className="h-16 bg-slate-100 dark:bg-white/5 rounded-lg" />)}
                                         </div>
-                                    ))}
+                                    ) : performers.length > 0 ? (
+                                        performers.map((student, i) => (
+                                            <div key={student.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+                                                <div className="relative">
+                                                    {student.image ? (
+                                                        <img src={student.image} alt={student.name} className="w-10 h-10 rounded-full object-cover" />
+                                                    ) : (
+                                                        <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold">{student.avatar}</div>
+                                                    )}
+                                                    {student.rank <= 3 && (
+                                                        <div className="absolute -top-1 -right-1 bg-yellow-400 text-black text-[8px] font-bold px-1 rounded shadow-sm">
+                                                            #{student.rank}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-sm font-bold text-slate-800 dark:text-white">{student.name}</p>
+                                                    <p className="text-xs text-slate-500">XP: {student.xp.toLocaleString()}</p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-sm font-bold text-primary dark:text-accent">{student.accuracy}%</p>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-slate-500 text-center py-10">No rankings yet</p>
+                                    )}
                                 </div>
                             </GlassPanel>
                         </div>
 
                         {/* Bottom Grid */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">
-                            {/* Recent Activity (omitted detailed table for brevity in this step, using placeholder logic if needed, but I'll add the table structure) */}
+                            {/* Recent Activity */}
                             <GlassPanel className="p-6">
                                 <h4 className="text-lg font-bold font-display text-slate-900 dark:text-white mb-4">Recent Transactions</h4>
                                 <div className="overflow-x-auto">
@@ -189,12 +229,28 @@ export default function Dashboard() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className="border-b border-slate-100 dark:border-white/5">
-                                                <td className="py-3">Alex J.</td>
-                                                <td className="py-3 text-slate-500">Pro</td>
-                                                <td className="py-3 text-right">$19.99</td>
-                                                <td className="py-3 text-right text-green-500">PAID</td>
-                                            </tr>
+                                            {isLoading ? (
+                                                <tr><td colSpan={4} className="py-10 text-center animate-pulse">Loading tokens...</td></tr>
+                                            ) : transactions.length > 0 ? (
+                                                transactions.map((t) => (
+                                                    <tr key={t.id} className="border-b border-slate-100 dark:border-white/5">
+                                                        <td className="py-3 font-medium text-slate-800 dark:text-slate-200">{t.student}</td>
+                                                        <td className="py-3 text-slate-500">{t.plan}</td>
+                                                        <td className="py-3 text-right text-slate-600 dark:text-slate-400">${t.amount.toFixed(2)}</td>
+                                                        <td className="py-3 text-right">
+                                                            <span className={clsx(
+                                                                "px-2 py-0.5 rounded text-[10px] font-bold uppercase",
+                                                                t.status === 'completed' ? "bg-green-500/10 text-green-500" :
+                                                                    t.status === 'pending' ? "bg-yellow-500/10 text-yellow-500" : "bg-red-500/10 text-red-500"
+                                                            )}>
+                                                                {t.status}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr><td colSpan={4} className="py-10 text-center text-slate-500">No recent transactions</td></tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>

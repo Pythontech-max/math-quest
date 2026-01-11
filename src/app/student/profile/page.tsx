@@ -88,23 +88,23 @@ export default function ProfilePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-background-dark flex items-center justify-center">
+            <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center">
                 <div className="text-slate-400">Loading profile...</div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-background-dark flex flex-col">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col transition-colors duration-300">
             {/* Header */}
-            <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-background-dark/90 backdrop-blur-md border-b border-white/5">
+            <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-surface-light/80 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
                 <div className="flex items-center gap-3">
-                    <Link href="/student" className="size-10 flex items-center justify-center rounded-full bg-surface-dark hover:bg-surface-dark/80 text-white transition-colors">
+                    <Link href="/student" className="size-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-surface-dark/80 text-slate-600 dark:text-white transition-colors">
                         <span className="material-symbols-outlined">arrow_back</span>
                     </Link>
-                    <h1 className="text-lg font-bold text-white font-display">My Profile</h1>
+                    <h1 className="text-lg font-bold text-slate-900 dark:text-white font-display">My Profile</h1>
                 </div>
-                <button className="p-2 rounded-lg hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
+                <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
                     <span className="material-symbols-outlined">settings</span>
                 </button>
             </header>
@@ -125,13 +125,13 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    <h2 className="mt-4 text-xl font-bold text-white relative z-10">{userData.name}</h2>
+                    <h2 className="mt-4 text-xl font-bold text-slate-900 dark:text-white relative z-10">{userData.name}</h2>
                     <p className="text-sm text-slate-400 relative z-10">{userData.email}</p>
                     <p className="text-xs text-slate-500 mt-1 relative z-10">Member since {userData.joined}</p>
 
                     {/* Quick Stats */}
                     <div className="mt-6 grid grid-cols-3 gap-4 w-full relative z-10">
-                        <div className="p-3 rounded-xl bg-surface-dark/50 border border-white/5">
+                        <div className="p-3 rounded-xl bg-white dark:bg-surface-dark/50 border border-slate-200 dark:border-white/5 shadow-sm">
                             <p className="text-2xl font-bold text-yellow-400">{userData.xp.toLocaleString()}</p>
                             <p className="text-xs text-slate-500">Total XP</p>
                         </div>
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                         <span className="material-symbols-outlined text-orange-400">local_fire_department</span>
                     </div>
                     <div className="flex-1">
-                        <p className="font-bold text-white">{userData.streakDays}-Day Streak!</p>
+                        <p className="font-bold text-slate-900 dark:text-white">{userData.streakDays}-Day Streak!</p>
                         <p className="text-xs text-slate-400">
                             {userData.streakDays >= 7
                                 ? "Amazing! Keep the momentum going!"
@@ -164,7 +164,7 @@ export default function ProfilePage() {
                 {/* Achievements */}
                 <GlassPanel className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold text-white">Achievements</h3>
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Achievements</h3>
                         <span className="text-xs text-slate-500">{userData.achievements.filter(a => a.unlocked).length}/{userData.achievements.length}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -185,7 +185,7 @@ export default function ProfilePage() {
                                     <span className="material-symbols-outlined">{ach.icon}</span>
                                 </div>
                                 <div>
-                                    <p className="font-bold text-white text-sm">{ach.title}</p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">{ach.title}</p>
                                     <p className="text-xs text-slate-500">{ach.desc}</p>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                 {/* Recent Games */}
                 <GlassPanel className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold text-white">Recent Games</h3>
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Recent Games</h3>
                         <Link href="/student" className="text-xs text-primary hover:underline">View All</Link>
                     </div>
                     <div className="space-y-3">
@@ -204,13 +204,13 @@ export default function ProfilePage() {
                             <p className="text-slate-500 text-center py-4">No games played yet</p>
                         ) : (
                             history.map((game) => (
-                                <div key={game.id} className="flex items-center justify-between p-3 rounded-xl bg-surface-dark/30 border border-white/5">
+                                <div key={game.id} className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-surface-dark/30 border border-slate-200 dark:border-white/5 shadow-sm">
                                     <div className="flex items-center gap-3">
                                         <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                                             <span className="material-symbols-outlined">calculate</span>
                                         </div>
                                         <div>
-                                            <p className="font-bold text-white capitalize">{game.operation.toLowerCase()}</p>
+                                            <p className="font-bold text-slate-900 dark:text-white capitalize">{game.operation.toLowerCase()}</p>
                                             <p className="text-xs text-slate-500">{game.date}</p>
                                         </div>
                                     </div>

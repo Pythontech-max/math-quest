@@ -58,14 +58,14 @@ export default function StudentDashboard() {
     return (
         <div className="min-h-screen bg-background-light dark:bg-background-dark p-6 flex flex-col items-center">
             <header className="w-full max-w-4xl flex justify-between items-center mb-10">
-                <h1 className="text-2xl font-bold text-white font-display">Student Portal</h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white font-display">Student Portal</h1>
                 <div className="flex items-center gap-4">
                     <Link href="/student/leaderboard" className="p-2 rounded-lg hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
                         <span className="material-symbols-outlined">leaderboard</span>
                     </Link>
                     <Link href="/student/profile" className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">ST</div>
-                        <span className="text-white hidden sm:inline">Student</span>
+                        <span className="text-slate-800 dark:text-white hidden sm:inline">Student</span>
                     </Link>
                 </div>
             </header>
@@ -76,8 +76,8 @@ export default function StudentDashboard() {
                 <GlassPanel className="p-8 flex flex-col items-center text-center gap-6">
                     <span className="material-symbols-outlined text-6xl text-primary">rocket_launch</span>
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Ready for a mission?</h2>
-                        <p className="text-slate-400">Start a new practice session to earn XP.</p>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Ready for a mission?</h2>
+                        <p className="text-slate-500 dark:text-slate-400">Start a new practice session to earn XP.</p>
                     </div>
                     <Link href="/play/setup" className="w-full">
                         <NeonButton fullWidth variant="primary">Start New Game</NeonButton>
@@ -86,7 +86,7 @@ export default function StudentDashboard() {
 
                 {/* Stats Summary */}
                 <GlassPanel className="p-8 flex flex-col gap-4">
-                    <h3 className="text-xl font-bold text-white mb-4">Your Progress</h3>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Your Progress</h3>
 
                     {loading ? (
                         <div className="text-slate-400 text-center py-4">Loading stats...</div>
@@ -111,7 +111,7 @@ export default function StudentDashboard() {
                 {/* Recent History */}
                 <div className="md:col-span-2">
                     <GlassPanel className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-4">Recent Missions</h3>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Recent Missions</h3>
                         <div className="space-y-3">
                             {loading ? (
                                 <div className="text-slate-400 text-center py-4">Loading history...</div>
@@ -122,13 +122,13 @@ export default function StudentDashboard() {
                                 </div>
                             ) : (
                                 history.map((game) => (
-                                    <div key={game.id} className="flex justify-between items-center p-4 bg-surface-dark border border-white/5 rounded-xl">
+                                    <div key={game.id} className="flex justify-between items-center p-4 bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/5 rounded-xl">
                                         <div className="flex items-center gap-4">
                                             <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                                                 <span className="material-symbols-outlined">calculate</span>
                                             </div>
                                             <div>
-                                                <p className="text-white font-bold capitalize">{game.operation.toLowerCase()} Practice</p>
+                                                <p className="text-slate-900 dark:text-white font-bold capitalize">{game.operation.toLowerCase()} Practice</p>
                                                 <p className="text-xs text-slate-500">{game.date}</p>
                                             </div>
                                         </div>
