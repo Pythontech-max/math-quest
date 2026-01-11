@@ -3,7 +3,6 @@
 import Link from "next/link";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
-import { ThemeSwitcher } from "../ui/ThemeSwitcher";
 
 export function Sidebar() {
     const navItems = [
@@ -64,23 +63,18 @@ export function Sidebar() {
                     )}
                 </nav>
 
-                {/* Theme Switcher */}
-                <div className="mb-6 px-2">
-                    <ThemeSwitcher />
-                </div>
-
                 {/* System Health */}
                 <div className="mt-auto">
-                    <div className="rounded-xl bg-slate-50 dark:bg-gradient-to-br dark:from-[#292348] dark:to-primary/20 p-4 border border-slate-200 dark:border-[#292348]">
+                    <div className="rounded-xl bg-slate-100 dark:bg-[#1e1933] p-4 border border-slate-200 dark:border-[#292348]">
                         <div className="flex items-center gap-3 mb-3">
                             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-                            <span className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                            <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
                                 System Healthy
                             </span>
                         </div>
-                        <div className="w-full bg-slate-200 dark:bg-black/30 rounded-full h-1.5 mb-1">
+                        <div className="w-full bg-slate-300 dark:bg-[#292348] rounded-full h-1.5 mb-1">
                             <div
-                                className="bg-accent h-1.5 rounded-full"
+                                className="bg-green-500 h-1.5 rounded-full"
                                 style={{ width: "92%" }}
                             ></div>
                         </div>
